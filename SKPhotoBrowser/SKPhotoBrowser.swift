@@ -17,13 +17,14 @@ open class SKPhotoBrowser: UIViewController {
     
     fileprivate var closeButton: SKCloseButton!
     fileprivate var deleteButton: SKDeleteButton!
+    fileprivate var reportButton: SKReportButton!
     fileprivate var toolbar: SKToolbar!
     
     // actions
     fileprivate var activityViewController: UIActivityViewController!
     open var activityItemProvider: UIActivityItemProvider? = nil
     fileprivate var panGesture: UIPanGestureRecognizer!
-
+    
     // tool for controls
     fileprivate var applicationWindow: UIWindow!
     fileprivate lazy var pagingScrollView: SKPagingScrollView = SKPagingScrollView(frame: self.view.frame, browser: self)
@@ -116,11 +117,12 @@ open class SKPhotoBrowser: UIViewController {
         configureAppearance()
         configureCloseButton()
         configureDeleteButton()
+        configureReportButton()
         configureToolbar()
         
         animator.willPresent(self)
     }
-
+    
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -150,7 +152,7 @@ open class SKPhotoBrowser: UIViewController {
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         isViewActive = true
-
+        
     }
     
     override open var prefersStatusBarHidden: Bool {
@@ -214,7 +216,7 @@ open class SKPhotoBrowser: UIViewController {
     
     open func dismissPhotoBrowser(animated: Bool, completion: ((Void) -> Void)? = nil) {
         prepareForClosePhotoBrowser()
-
+        
         if !animated {
             modalTransitionStyle = .crossDissolve
         }
@@ -224,7 +226,7 @@ open class SKPhotoBrowser: UIViewController {
             self.delegate?.didDismissAtPageIndex?(self.currentPageIndex)
         }
     }
-
+    
     open func determineAndClose() {
         delegate?.willDismissAtPageIndex?(currentPageIndex)
         animator.willDismiss(self)
@@ -234,25 +236,36 @@ open class SKPhotoBrowser: UIViewController {
 // MARK: - Public Function For Customizing Buttons
 
 public extension SKPhotoBrowser {
-  func updateCloseButton(_ image: UIImage, size: CGSize? = nil) {
+    func updateCloseButton(_ image: UIImage, size: CGSize? = nil) {
         if closeButton == nil {
             configureCloseButton()
         }
         closeButton.setImage(image, for: UIControlState())
-    
+        
         if let size = size {
             closeButton.setFrameSize(size)
         }
     }
-  
-  func updateDeleteButton(_ image: UIImage, size: CGSize? = nil) {
+    
+    func updateDeleteButton(_ image: UIImage, size: CGSize? = nil) {
         if deleteButton == nil {
             configureDeleteButton()
         }
         deleteButton.setImage(image, for: UIControlState())
-    
+        
         if let size = size {
             deleteButton.setFrameSize(size)
+        }
+    }
+    
+    func updateReportButton(_ image: UIImage, size: CGSize? = nil) {
+        if reportButton == nil {
+            configureReportButton()
+        }
+        reportButton.setImage(image, for: UIControlState())
+        
+        if let size = size {
+            reportButton.setFrameSize(size)
         }
     }
 }
@@ -390,6 +403,11 @@ internal extension SKPhotoBrowser {
             deleteButton.alpha = 1
             deleteButton.frame = deleteButton.showFrame
         }
+        if SKPhotoBrowserOptions.displayReportButton {
+            reportButton.alpha = 1
+            reportButton.frame = reportButton.showFrame
+            view.bringSubview(toFront: reportButton)
+        }
     }
     
     func pageDisplayedAtIndex(_ index: Int) -> SKZoomingScrollView? {
@@ -503,6 +521,10 @@ internal extension SKPhotoBrowser {
         }
     }
     
+    func reportButtonPressed(_ sender: UIButton) {
+        delegate?.reportPhoto?(self, index: currentPageIndex)
+    }
+    
     func closeButtonPressed(_ sender: UIButton) {
         determineAndClose()
     }
@@ -544,7 +566,7 @@ internal extension SKPhotoBrowser {
     }
 }
 
-// MARK: - Private Function 
+// MARK: - Private Function
 private extension SKPhotoBrowser {
     func configureAppearance() {
         view.backgroundColor = SKPhotoBrowserOptions.backgroundColor
@@ -581,6 +603,13 @@ private extension SKPhotoBrowser {
         view.addSubview(deleteButton)
     }
     
+    func configureReportButton() {
+        reportButton = SKReportButton(frame: .zero)
+        reportButton.addTarget(self, action: #selector(reportButtonPressed(_:)), for: .touchUpInside)
+        reportButton.isHidden = !SKPhotoBrowserOptions.displayReportButton
+        view.addSubview(reportButton)
+    }
+    
     func configureToolbar() {
         toolbar = SKToolbar(frame: frameForToolbarAtOrientation(), browser: self)
         view.addSubview(toolbar)
@@ -592,22 +621,22 @@ private extension SKPhotoBrowser {
         let captionViews = pagingScrollView.getCaptionViews()
         
         UIView.animate(withDuration: 0.35,
-            animations: { () -> Void in
-                let alpha: CGFloat = hidden ? 0.0 : 1.0
-                self.toolbar.alpha = alpha
-                self.toolbar.frame = hidden ? self.frameForToolbarHideAtOrientation() : self.frameForToolbarAtOrientation()
-                
-                if SKPhotoBrowserOptions.displayCloseButton {
-                    self.closeButton.alpha = alpha
-                    self.closeButton.frame = hidden ? self.closeButton.hideFrame : self.closeButton.showFrame
-                }
-                if SKPhotoBrowserOptions.displayDeleteButton {
-                    self.deleteButton.alpha = alpha
-                    self.deleteButton.frame = hidden ? self.deleteButton.hideFrame : self.deleteButton.showFrame
-                }
-                captionViews.forEach { $0.alpha = alpha }
-            },
-            completion: nil)
+                       animations: { () -> Void in
+                        let alpha: CGFloat = hidden ? 0.0 : 1.0
+                        self.toolbar.alpha = alpha
+                        self.toolbar.frame = hidden ? self.frameForToolbarHideAtOrientation() : self.frameForToolbarAtOrientation()
+                        
+                        if SKPhotoBrowserOptions.displayCloseButton {
+                            self.closeButton.alpha = alpha
+                            self.closeButton.frame = hidden ? self.closeButton.hideFrame : self.closeButton.showFrame
+                        }
+                        if SKPhotoBrowserOptions.displayDeleteButton {
+                            self.deleteButton.alpha = alpha
+                            self.deleteButton.frame = hidden ? self.deleteButton.hideFrame : self.deleteButton.showFrame
+                        }
+                        captionViews.forEach { $0.alpha = alpha }
+        },
+                       completion: nil)
         
         if !permanent {
             hideControlsAfterDelay()

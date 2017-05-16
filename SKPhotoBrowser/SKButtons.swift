@@ -32,10 +32,10 @@ class SKButton: UIButton {
         autoresizingMask = [.flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin]
         
         let image = UIImage(named: "SKPhotoBrowser.bundle/images/\(imageName)",
-                            in: bundle, compatibleWith: nil) ?? UIImage()
+            in: bundle, compatibleWith: nil) ?? UIImage()
         setImage(image, for: UIControlState())
     }
-  
+    
     func setFrameSize(_ size: CGSize) {
         let newRect = CGRect(x: margin, y: buttonTopOffset, width: size.width, height: size.height)
         frame = newRect
@@ -58,6 +58,27 @@ class SKCloseButton: SKButton {
     }
 }
 
+class SKReportButton: SKButton {
+    let imageName = "btn_common_report_wh"
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup(imageName)
+        
+        let size: CGSize = CGSize(width: 24,height: 24)
+        let screenHeight: CGFloat = UIScreen.main.bounds.size.height
+        let originY: CGFloat = screenHeight - size.width - 16
+        
+        imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        showFrame = CGRect(x: 16, y: originY, width: size.width, height: size.height)
+        hideFrame = CGRect(x: 16, y: screenHeight + size.height, width: size.width, height: size.height)
+    }
+    
+}
+
 class SKDeleteButton: SKButton {
     let imageName = "btn_common_delete_wh"
     required init?(coder aDecoder: NSCoder) {
@@ -70,7 +91,7 @@ class SKDeleteButton: SKButton {
         showFrame = CGRect(x: SKMesurement.screenWidth - size.width, y: buttonTopOffset, width: size.width, height: size.height)
         hideFrame = CGRect(x: SKMesurement.screenWidth - size.width, y: -20, width: size.width, height: size.height)
     }
-  
+    
     override func setFrameSize(_ size: CGSize) {
         let newRect = CGRect(x: SKMesurement.screenWidth - size.width, y: buttonTopOffset, width: size.width, height: size.height)
         self.frame = newRect
