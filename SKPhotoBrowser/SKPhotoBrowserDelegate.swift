@@ -68,7 +68,7 @@ import Foundation
      - Parameter browser: reference to the calling SKPhotoBrowser
      - Parameter index: the index of the removed photo
      */
-    @objc optional func reportPhoto(_ browser: SKPhotoBrowser, index: Int)
+    @objc optional func reportPhoto(_ index: Int)
     
     /**
      Asks the delegate for the view for a certain photo. Needed to detemine the animation when presenting/closing the browser.
