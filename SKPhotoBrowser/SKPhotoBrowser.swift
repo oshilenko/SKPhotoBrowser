@@ -522,7 +522,7 @@ internal extension SKPhotoBrowser {
     }
     
     func reportButtonPressed(_ sender: UIButton) {
-        delegate?.reportPhoto?(self, index: currentPageIndex)
+        delegate?.reportPhoto?(currentPageIndex)
     }
     
     func closeButtonPressed(_ sender: UIButton) {
