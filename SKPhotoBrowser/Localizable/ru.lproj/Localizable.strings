@@ -1,0 +1,11 @@
+/* 
+  Localizable-ru.strings
+  SKPhotoBrowser
+
+  Created by Ольга Шиленко on 21.06.17.
+  Copyright © 2017 suzuki_keishi. All rights reserved.
+*/
+
+"Cancel" = "Отмена";
+"Save photo" = "Сохранить фото";
+"Report photo" = "Пожаловаться";

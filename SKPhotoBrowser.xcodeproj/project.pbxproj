@@ -12,6 +12,7 @@
 		26C97AD51D0EB6870039F6CB /* SKCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C97AD41D0EB6870039F6CB /* SKCache.swift */; };
 		26C97AD71D0EB6A00039F6CB /* SKCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C97AD61D0EB6A00039F6CB /* SKCacheTests.swift */; };
 		26C97AD91D0EB8BB0039F6CB /* SKCacheable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C97AD81D0EB8BB0039F6CB /* SKCacheable.swift */; };
+		84F8C8841EFAB10E007A49EE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84F8C8801EFAB10E007A49EE /* Localizable.strings */; };
 		8909B5341BC791280060A053 /* SKPhotoBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 8909B5331BC791280060A053 /* SKPhotoBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8909B5431BC791510060A053 /* SKCaptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53B1BC791510060A053 /* SKCaptionView.swift */; };
 		8909B5441BC791510060A053 /* SKDetectingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53C1BC791510060A053 /* SKDetectingImageView.swift */; };
@@ -49,6 +50,8 @@
 		26C97AD41D0EB6870039F6CB /* SKCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKCache.swift; sourceTree = "<group>"; };
 		26C97AD61D0EB6A00039F6CB /* SKCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKCacheTests.swift; sourceTree = "<group>"; };
 		26C97AD81D0EB8BB0039F6CB /* SKCacheable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKCacheable.swift; sourceTree = "<group>"; };
+		84F8C88E1EFAB6FE007A49EE /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		84F8C8991EFABBB8007A49EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8909B5301BC791280060A053 /* SKPhotoBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKPhotoBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8909B5331BC791280060A053 /* SKPhotoBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKPhotoBrowser.h; sourceTree = "<group>"; };
 		8909B5351BC791280060A053 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -141,6 +144,7 @@
 				89D0BA481D59966B002A811B /* SKMesurement.swift */,
 				8909B5421BC791510060A053 /* SKZoomingScrollView.swift */,
 				8909B5351BC791280060A053 /* Info.plist */,
+				84F8C8801EFAB10E007A49EE /* Localizable.strings */,
 				210E53EB1C986D1C008DD5E3 /* extensions */,
 				8909B54C1BC7916E0060A053 /* SKPhotoBrowser.bundle */,
 			);
@@ -234,6 +238,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ru,
+				Base,
 			);
 			mainGroup = 8909B5261BC791280060A053;
 			productRefGroup = 8909B5311BC791280060A053 /* Products */;
@@ -251,6 +257,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84F8C8841EFAB10E007A49EE /* Localizable.strings in Resources */,
 				8909B54D1BC7916E0060A053 /* SKPhotoBrowser.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +332,19 @@
 			targetProxy = A64B89391CB04222000071B9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		84F8C8801EFAB10E007A49EE /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84F8C88E1EFAB6FE007A49EE /* ru */,
+				84F8C8991EFABBB8007A49EE /* Base */,
+			);
+			name = Localizable.strings;
+			path = Localizable;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		8909B5361BC791280060A053 /* Debug */ = {

@@ -522,7 +522,21 @@ internal extension SKPhotoBrowser {
     }
     
     func reportButtonPressed(_ sender: UIButton) {
-        delegate?.reportPhoto?(currentPageIndex)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let firstAction = UIAlertAction.init(title: "Сохранить фото",
+                                             style: .default) { [weak self] (action) in
+            self?.saveImage()
+        }
+        let secondAction = UIAlertAction.init(title: NSLocalizedString("Сообщить о нарушении", comment: ""), style: .default) { [weak self] (action) in
+            guard let sself = self else { return }
+            sself.delegate?.reportPhoto?(sself.currentPageIndex)
+        }
+        let cancelAction = UIAlertAction.init(title: NSLocalizedString("Отмена", comment: ""), style: .cancel)
+        alertController.addAction(firstAction)
+        alertController.addAction(secondAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func closeButtonPressed(_ sender: UIButton) {
@@ -634,6 +648,10 @@ private extension SKPhotoBrowser {
                             self.deleteButton.alpha = alpha
                             self.deleteButton.frame = hidden ? self.deleteButton.hideFrame : self.deleteButton.showFrame
                         }
+                        if SKPhotoBrowserOptions.displayReportButton {
+                            self.reportButton.alpha = alpha
+                            self.reportButton.frame = hidden ? self.reportButton.hideFrame : self.reportButton.showFrame
+                        }
                         captionViews.forEach { $0.alpha = alpha }
         },
                        completion: nil)
@@ -660,6 +678,24 @@ private extension SKPhotoBrowser {
             
         } else if photos.count == 1 {
             dismissPhotoBrowser(animated: true)
+        }
+    }
+    
+    func saveImage() {
+        guard let image = photos[currentPageIndex].underlyingImage else { return }
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(didFinishSaving(_:with:contextInfo:)), nil)
+    }
+    
+    @objc func didFinishSaving(_ image: UIImage, with error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            let ac = UIAlertController(title: "Ошибка сохранения", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "ОК", style: .default))
+            present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: "Сохранено!", message: "Изображение успешно сохранено на диск.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "ОК", style: .default))
+            present(ac, animated: true)
         }
     }
 }
