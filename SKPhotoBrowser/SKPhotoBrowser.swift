@@ -522,7 +522,7 @@ internal extension SKPhotoBrowser {
     }
     
     func reportButtonPressed(_ sender: UIButton) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UI_USER_INTERFACE_IDIOM() == .pad ? .alert : .actionSheet)
         let firstAction = UIAlertAction.init(title: "Сохранить фото",
                                              style: .default) { [weak self] (action) in
             self?.saveImage()
@@ -551,7 +551,7 @@ internal extension SKPhotoBrowser {
         }
         
         if let titles = SKPhotoBrowserOptions.actionButtonTitles {
-            let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: UI_USER_INTERFACE_IDIOM() == .pad ? .alert : .actionSheet)
             actionSheetController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
             }))
             for idx in titles.indices {
