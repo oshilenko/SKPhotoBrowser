@@ -527,11 +527,11 @@ internal extension SKPhotoBrowser {
                                              style: .default) { [weak self] (action) in
             self?.saveImage()
         }
-        let secondAction = UIAlertAction.init(title: NSLocalizedString(SKPhotoBrowserOptions.reportButtonSecondActionText, comment: ""), style: .default) { [weak self] (action) in
+        let secondAction = UIAlertAction.init(title: SKPhotoBrowserOptions.reportButtonSecondActionText, style: .default) { [weak self] (action) in
             guard let sself = self else { return }
             sself.delegate?.reportPhoto?(sself.currentPageIndex)
         }
-        let cancelAction = UIAlertAction.init(title: NSLocalizedString(SKPhotoBrowserOptions.reportButtonCancelText, comment: ""), style: .cancel)
+        let cancelAction = UIAlertAction.init(title: SKPhotoBrowserOptions.reportButtonCancelText, style: .cancel)
         alertController.addAction(firstAction)
         alertController.addAction(secondAction)
         alertController.addAction(cancelAction)
