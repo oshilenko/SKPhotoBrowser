@@ -523,15 +523,15 @@ internal extension SKPhotoBrowser {
     
     func reportButtonPressed(_ sender: UIButton) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: UI_USER_INTERFACE_IDIOM() == .pad ? .alert : .actionSheet)
-        let firstAction = UIAlertAction.init(title: "Сохранить фото",
+        let firstAction = UIAlertAction.init(title: SKPhotoBrowserOptions.reportButtonFirstActionText,
                                              style: .default) { [weak self] (action) in
             self?.saveImage()
         }
-        let secondAction = UIAlertAction.init(title: NSLocalizedString("Сообщить о нарушении", comment: ""), style: .default) { [weak self] (action) in
+        let secondAction = UIAlertAction.init(title: NSLocalizedString(SKPhotoBrowserOptions.reportButtonSecondActionText, comment: ""), style: .default) { [weak self] (action) in
             guard let sself = self else { return }
             sself.delegate?.reportPhoto?(sself.currentPageIndex)
         }
-        let cancelAction = UIAlertAction.init(title: NSLocalizedString("Отмена", comment: ""), style: .cancel)
+        let cancelAction = UIAlertAction.init(title: NSLocalizedString(SKPhotoBrowserOptions.reportButtonCancelText, comment: ""), style: .cancel)
         alertController.addAction(firstAction)
         alertController.addAction(secondAction)
         alertController.addAction(cancelAction)
@@ -689,12 +689,12 @@ private extension SKPhotoBrowser {
     @objc func didFinishSaving(_ image: UIImage, with error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             // we got back an error!
-            let ac = UIAlertController(title: "Ошибка сохранения", message: error.localizedDescription, preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "ОК", style: .default))
+            let ac = UIAlertController(title: SKPhotoBrowserOptions.savingPhotoErrorTitle, message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: SKPhotoBrowserOptions.okButtonText, style: .default))
             present(ac, animated: true)
         } else {
-            let ac = UIAlertController(title: "Сохранено!", message: "Изображение успешно сохранено на диск.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "ОК", style: .default))
+            let ac = UIAlertController(title: SKPhotoBrowserOptions.savingPhotoSuccessfulTitle, message: SKPhotoBrowserOptions.savingPhotoSuccessfulDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: SKPhotoBrowserOptions.okButtonText, style: .default))
             present(ac, animated: true)
         }
     }

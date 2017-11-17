@@ -31,6 +31,15 @@ public struct SKPhotoBrowserOptions {
     public static var enableZoomBlackArea: Bool = true
     public static var enableSingleTapDismiss: Bool = false
     
+    public static var reportButtonFirstActionText: String = "Сохранить фото"
+    public static var reportButtonSecondActionText: String = "Сообщить о нарушении"
+    public static var reportButtonCancelText: String = "Отмена"
+    
+    public static var savingPhotoErrorTitle: String = "Ошибка сохранения"
+    public static var savingPhotoSuccessfulTitle: String = "Сохранено!"
+    public static var savingPhotoSuccessfulDescription: String = "Изображение успешно сохранено на диск."
+    public static var okButtonText: String = "ОК"
+    
     public static var backgroundColor: UIColor = .black
 }
 
