@@ -52,7 +52,7 @@ open class SKCaptionView: UIView {
         guard let text = photoLabel.text else {
             return CGSize.zero
         }
-        guard photoLabel.text?.characters.count > 0 else {
+        guard photoLabel.text?.count > 0 else {
             return CGSize.zero
         }
         
@@ -60,7 +60,8 @@ open class SKCaptionView: UIView {
         let width: CGFloat = size.width - photoLabelPadding * 2
         let height: CGFloat = photoLabel.font.lineHeight * CGFloat(photoLabel.numberOfLines)
         
-        let attributedText = NSAttributedString(string: text, attributes: [NSFontAttributeName: font])
+        let attributedText = NSAttributedString(string: text,
+                                                attributes: [kCTFontAttributeName as NSAttributedStringKey: font])
         let textSize = attributedText.boundingRect(with: CGSize(width: width, height: height), options: .usesLineFragmentOrigin, context: nil).size
         
         return CGSize(width: textSize.width, height: textSize.height + photoLabelPadding * 2)
